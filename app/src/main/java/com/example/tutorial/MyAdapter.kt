@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MyAdapter(private val list: List<Int>, private val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter(private val list: List<Int>, private val context: Context, private val listener: onClick): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(context).inflate(R.layout.item_card, parent, false)
         return ViewHolder(inflater)
@@ -28,7 +28,15 @@ class MyAdapter(private val list: List<Int>, private val context: Context): Recy
 
         fun bind(item: Int) {
             textView.text = item.toString()
+
+            itemView.setOnClickListener {
+                listener.cardClick(adapterPosition)
+            }
         }
 
+    }
+
+    interface onClick {
+        fun cardClick(position: Int)
     }
 }
